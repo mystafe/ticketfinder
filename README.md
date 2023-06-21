@@ -20,7 +20,7 @@ Installation
 Clone the repository:
 shell
 Copy code
-git clone https://github.com/your-username/ticket-finder.git
+git clone https://github.com/mystafe/ticket-finder.git
 Navigate to the project directory:
 shell
 Copy code
