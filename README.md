@@ -1,9 +1,8 @@
 # ticketfinder
 
-Ticket Finder Application
 Ticket Finder is a hobby project that helps users find tickets for various events such as concerts, cinema screenings, sports events, and more.
 
-Features
+**Features**
 Find tickets for concerts, cinema screenings, sports events, and more.
 Customer endpoint for managing customer-related operations.
 Event Detail endpoint for managing event-related operations.
@@ -13,8 +12,8 @@ Backend: C#, ASP.NET Core
 Database: SQL Server
 Frontend: React (Not implemented yet)
 
-Getting Started
-Prerequisites
+**Getting Started**
+**Prerequisites**
 .NET Core SDK installed
 SQL Server installed
 Installation
@@ -39,7 +38,7 @@ Copy code
 dotnet run
 The application will start running on http://localhost:5000.
 
-API Documentation
+**API Documentation**
 Endpoints are under construction. Current ones:
 ![image](https://github.com/mystafe/ticketfinder/assets/75567558/dedd738f-5aa3-4c27-af0a-8048302a86ab)
 
@@ -50,12 +49,11 @@ Customer Endpoints:
 ![image](https://github.com/mystafe/ticketfinder/assets/75567558/ab55f744-d985-49f0-b34d-02365ece85f2)
 
 
-
-Contributing
+**Contributing**
 Contributions to the Ticket Finder application are welcome! If you find any bugs or have suggestions for new features, please open an issue or submit a pull request.
 
-License
+**License**
 No License
 
-Contact
+**Contact**
 For any questions or inquiries, please contact admess34@gmail.com (Mustafa Evleksiz)
