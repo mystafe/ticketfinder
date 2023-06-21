@@ -36,7 +36,7 @@ Build and run the application:
 shell
 Copy code
 dotnet run
-The application will start running on http://localhost:5000.
+The application will start running on http://localhost:7169.
 
 **API Documentation**
 Endpoints are under construction. Current ones:
