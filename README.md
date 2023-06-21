@@ -40,9 +40,12 @@ dotnet run
 The application will start running on http://localhost:5000.
 
 API Documentation
-Current Endpoints*
-Customer Endpoints:
+Endpoints are under construction. Current ones:
 ![image](https://github.com/mystafe/ticketfinder/assets/75567558/dedd738f-5aa3-4c27-af0a-8048302a86ab)
+
+Customer Endpoints:
+![image](https://github.com/mystafe/ticketfinder/assets/75567558/ddd1ff7c-6a44-4c38-9f6b-a26dfba8629a)
+
 **GetAllEventDetails:
 ![image](https://github.com/mystafe/ticketfinder/assets/75567558/ab55f744-d985-49f0-b34d-02365ece85f2)
 
