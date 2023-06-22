@@ -18,31 +18,30 @@ namespace ticketfinder.Controllers
             context = new TicketFinderContext();
         }
 
-
         [HttpGet]
         public IActionResult GetStages()
         {
-
             if (context.Stages == null) return NotFound();
-
             List<Stage> stages = context.Stages.Include(st=>st.Seats).Include(st=>st.Place).ToList();
-            //stages.ForEach(s => s.SetSeats(s.Capacity, s.CapacityVip)); later
-
             return Ok(stages);
-
+        }
+        [HttpGet("{id}")]
+        public IActionResult GetStagesById(int id)
+        {
+            var stage = context.Stages.Include(s => s.Seats).AsQueryable().FirstOrDefault(s => s.Id == id);
+            if (stage == null) return NotFound();
+            return Ok(stage);
         }
 
         [HttpPost]
         public IActionResult PostStages(CreateStageDTO model)
         {
-
             Stage stage = new Stage();
             stage.Name = model.Name;
             stage.Capacity = model.Capacity;
             stage.CapacityVip = model.CapacityVip;
             stage.CapacityNormal = model.CapacityNormal;
             stage.IsIndoor = model.IsIndoor;
-
             var place = context.Places.Find(model.PlaceId);
             if (place==null)
             {
@@ -91,11 +90,7 @@ namespace ticketfinder.Controllers
 
 
             }
-
-
             stage.SetSeats(seats);// .SetSeats(model.Capacity, model.CapacityVip);
-          
-
             context.Stages.Add(stage);
             context.SaveChanges();
             return Ok(stage);

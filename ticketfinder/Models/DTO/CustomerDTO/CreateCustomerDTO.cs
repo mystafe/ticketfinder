@@ -14,5 +14,6 @@ namespace ticketfinder.Models.DTO.CustomerDTO
         public string? Phone { get; set; }
         public int CityId { get; set; }
         public string? FullAdress { get; set; }
+        public string? GeoLocation { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ticketfinder.Context;
 using ticketfinder.Models.DTO.EventDTO;
 using ticketfinder.Models.ORM;
@@ -43,6 +44,33 @@ namespace ticketfinder.Controllers
                 
             }
             return Ok(events);
+        }
+
+
+        [HttpGet("{id}")]
+        public IActionResult GetEvent(int id)
+        {
+
+            Event myEvent = context.Events.Include(e=>e.EventStages).Include(e=>e.EventImages).AsQueryable().SingleOrDefault(e => e.Id == id);
+            if (myEvent == null)
+            {
+                return NotFound();
+
+            }
+
+            ResponseEventDTO responseEvent = new ResponseEventDTO();
+            responseEvent.EventStages = myEvent.EventStages;
+            responseEvent.EventType=myEvent.EventType;
+            responseEvent.Duration = myEvent.Duration;
+            responseEvent.IsOnSale = myEvent.IsOnSale;
+            responseEvent.IsActive = myEvent.IsActive;
+            responseEvent.IsAvailable = myEvent.IsAvailable;
+            responseEvent.Date=myEvent.Date;
+            responseEvent.Name=myEvent.Name;
+            responseEvent.Price=myEvent.Price;
+            responseEvent.EventImages = myEvent.EventImages;
+
+            return Ok(responseEvent);
         }
 
         [HttpPost]

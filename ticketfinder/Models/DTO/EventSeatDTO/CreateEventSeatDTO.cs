@@ -12,6 +12,5 @@ namespace ticketfinder.Models.DTO.EventSeatDTO
         public int SeatId { get; set; }
 
 
-
     }
 }

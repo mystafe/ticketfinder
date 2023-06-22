@@ -5,7 +5,8 @@
         public int Id { get; set; }
         public double Price { get; set; }
         public bool IsSold { get; set; } = false;
-        public Event? Event { get; set; }
+        public int EventId  { get; set; }
+        public int EventStageId { get; set; }
         public Seat? Seat { get; set; }
 
     }

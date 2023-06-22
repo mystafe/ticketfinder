@@ -20,13 +20,10 @@ namespace ticketfinder.Models.ORM
 
         public void SetSeats(List<Seat> seats)
         {
-
             Seats = seats;
-
             Capacity = seats.Count;
             CapacityNormal = seats.Where(s => s.Type == SeatType.Normal).Count();
             CapacityVip = seats.Where(s => s.Type == SeatType.Vip).Count();
-
         }
 
     }
