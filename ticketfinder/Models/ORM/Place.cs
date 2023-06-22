@@ -8,11 +8,10 @@ namespace ticketfinder.Models.ORM
 
         public int Id { get; set; }
         public string? Name { get; set; }
-        public TimeSpan OpenHour { get; set; }
-        public TimeSpan CloseHour { get; set; }
+        public TimeSpan? OpenHour { get; set; }
+        public TimeSpan? CloseHour { get; set; }
         public bool IsActive { get; set; }
+        public virtual Address? Address { get; set; }
         public List<Stage>? Stages  { get; set; }
-        public int? AddressId { get; set; }
-        public Address? Address { get; set; }
     }
 }

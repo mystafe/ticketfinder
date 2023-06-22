@@ -7,9 +7,7 @@ namespace ticketfinder.Models.ORM
         public int Id { get; set; }
         public int RatingValue { get; set; }
         public string? Comment { get; set; }
-        public int EventId { get; set; }
-        public Event Event { get; set; }
-        public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public Event? Event { get; set; }
+        public Customer? Customer { get; set; }
     }
 }

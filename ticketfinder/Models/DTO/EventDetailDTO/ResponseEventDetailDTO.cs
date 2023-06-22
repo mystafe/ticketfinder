@@ -17,9 +17,9 @@ namespace ticketfinder.Models.DTO.EventDetailDTO
         [MinLength(0)]
         [MaxLength(5)]
         public double AvgRating { get; set; }
-        public Array? EventImages { get; set; }
+        public List<string>? EventImages { get; set; }
         public string EventName { get; set; }
-        public Array? StageNames { get; set; }
+        public List<string>? StageNames { get; set; }
         public ICollection<EventSeat>? AllSeats { get; set; }
         public ICollection<EventSeat>? AvailableSeats { get; set; }
 

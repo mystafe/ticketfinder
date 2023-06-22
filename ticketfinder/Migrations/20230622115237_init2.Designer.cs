@@ -12,8 +12,8 @@ using ticketfinder.Context;
 namespace ticketfinder.Migrations
 {
     [DbContext(typeof(TicketFinderContext))]
-    [Migration("20230621083010_init")]
-    partial class init
+    [Migration("20230622115237_init2")]
+    partial class init2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,21 +23,6 @@ namespace ticketfinder.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("EventDetailStage", b =>
-                {
-                    b.Property<int>("EventDetailsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StagesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EventDetailsId", "StagesId");
-
-                    b.HasIndex("StagesId");
-
-                    b.ToTable("EventDetailStage");
-                });
 
             modelBuilder.Entity("ticketfinder.Models.ORM.Address", b =>
                 {
@@ -51,9 +36,11 @@ namespace ticketfinder.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FullAdress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GeoLocation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -71,10 +58,11 @@ namespace ticketfinder.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CountryId")
+                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -93,6 +81,7 @@ namespace ticketfinder.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -111,28 +100,37 @@ namespace ticketfinder.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CustomerType")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Firstname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsValidated")
                         .HasColumnType("bit");
 
                     b.Property<string>("Lastname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Middlename")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -150,25 +148,6 @@ namespace ticketfinder.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("ticketfinder.Models.ORM.EventDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<double>("AvgRating")
                         .HasMaxLength(5)
                         .HasColumnType("float");
@@ -179,7 +158,7 @@ namespace ticketfinder.Migrations
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
-                    b.Property<int>("EventId")
+                    b.Property<int>("EventType")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
@@ -195,11 +174,37 @@ namespace ticketfinder.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("ticketfinder.Models.ORM.EventImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UrlAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("EventDetails");
+                    b.ToTable("EventImages");
                 });
 
             modelBuilder.Entity("ticketfinder.Models.ORM.EventSeat", b =>
@@ -210,28 +215,56 @@ namespace ticketfinder.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("EventDetailId")
+                    b.Property<int>("EventId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsOnSale")
-                        .HasColumnType("bit");
+                    b.Property<int?>("EventStageId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsSold")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<int>("SeatId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventDetailId");
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("EventStageId");
 
                     b.HasIndex("SeatId");
 
                     b.ToTable("EventSeats");
+                });
+
+            modelBuilder.Entity("ticketfinder.Models.ORM.EventStage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double>("BasePrice")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StageId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("StageId");
+
+                    b.ToTable("EventStages");
                 });
 
             modelBuilder.Entity("ticketfinder.Models.ORM.Place", b =>
@@ -242,7 +275,7 @@ namespace ticketfinder.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("AddressId")
+                    b.Property<int>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<int?>("CityId")
@@ -255,6 +288,7 @@ namespace ticketfinder.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeSpan>("OpenHour")
@@ -307,6 +341,7 @@ namespace ticketfinder.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StageId")
@@ -373,31 +408,14 @@ namespace ticketfinder.Migrations
                     b.Property<int>("EventSeatId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("EventSeatId");
-
                     b.ToTable("Tickets");
-                });
-
-            modelBuilder.Entity("EventDetailStage", b =>
-                {
-                    b.HasOne("ticketfinder.Models.ORM.EventDetail", null)
-                        .WithMany()
-                        .HasForeignKey("EventDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ticketfinder.Models.ORM.Stage", null)
-                        .WithMany()
-                        .HasForeignKey("StagesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ticketfinder.Models.ORM.Address", b =>
@@ -413,7 +431,9 @@ namespace ticketfinder.Migrations
                 {
                     b.HasOne("ticketfinder.Models.ORM.Country", "Country")
                         .WithMany("Cities")
-                        .HasForeignKey("CountryId");
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Country");
                 });
@@ -429,7 +449,14 @@ namespace ticketfinder.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("ticketfinder.Models.ORM.EventDetail", b =>
+            modelBuilder.Entity("ticketfinder.Models.ORM.EventImage", b =>
+                {
+                    b.HasOne("ticketfinder.Models.ORM.Event", null)
+                        .WithMany("EventImages")
+                        .HasForeignKey("EventId");
+                });
+
+            modelBuilder.Entity("ticketfinder.Models.ORM.EventSeat", b =>
                 {
                     b.HasOne("ticketfinder.Models.ORM.Event", "Event")
                         .WithMany()
@@ -437,16 +464,9 @@ namespace ticketfinder.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("ticketfinder.Models.ORM.EventSeat", b =>
-                {
-                    b.HasOne("ticketfinder.Models.ORM.EventDetail", "EventDetail")
+                    b.HasOne("ticketfinder.Models.ORM.EventStage", null)
                         .WithMany("EventSeats")
-                        .HasForeignKey("EventDetailId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EventStageId");
 
                     b.HasOne("ticketfinder.Models.ORM.Seat", "Seat")
                         .WithMany()
@@ -454,16 +474,33 @@ namespace ticketfinder.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("EventDetail");
+                    b.Navigation("Event");
 
                     b.Navigation("Seat");
+                });
+
+            modelBuilder.Entity("ticketfinder.Models.ORM.EventStage", b =>
+                {
+                    b.HasOne("ticketfinder.Models.ORM.Event", null)
+                        .WithMany("EventStages")
+                        .HasForeignKey("EventId");
+
+                    b.HasOne("ticketfinder.Models.ORM.Stage", "Stage")
+                        .WithMany()
+                        .HasForeignKey("StageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Stage");
                 });
 
             modelBuilder.Entity("ticketfinder.Models.ORM.Place", b =>
                 {
                     b.HasOne("ticketfinder.Models.ORM.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ticketfinder.Models.ORM.City", null)
                         .WithMany("Places")
@@ -515,21 +552,11 @@ namespace ticketfinder.Migrations
 
             modelBuilder.Entity("ticketfinder.Models.ORM.Ticket", b =>
                 {
-                    b.HasOne("ticketfinder.Models.ORM.Customer", "Customer")
+                    b.HasOne("ticketfinder.Models.ORM.Customer", null)
                         .WithMany("Tickets")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("ticketfinder.Models.ORM.EventSeat", "EventSeat")
-                        .WithMany("Tickets")
-                        .HasForeignKey("EventSeatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("EventSeat");
                 });
 
             modelBuilder.Entity("ticketfinder.Models.ORM.City", b =>
@@ -551,14 +578,16 @@ namespace ticketfinder.Migrations
                     b.Navigation("Tickets");
                 });
 
-            modelBuilder.Entity("ticketfinder.Models.ORM.EventDetail", b =>
+            modelBuilder.Entity("ticketfinder.Models.ORM.Event", b =>
                 {
-                    b.Navigation("EventSeats");
+                    b.Navigation("EventImages");
+
+                    b.Navigation("EventStages");
                 });
 
-            modelBuilder.Entity("ticketfinder.Models.ORM.EventSeat", b =>
+            modelBuilder.Entity("ticketfinder.Models.ORM.EventStage", b =>
                 {
-                    b.Navigation("Tickets");
+                    b.Navigation("EventSeats");
                 });
 
             modelBuilder.Entity("ticketfinder.Models.ORM.Place", b =>

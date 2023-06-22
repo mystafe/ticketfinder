@@ -10,7 +10,7 @@ namespace ticketfinder.Models.DTO.EventDetailDTO
         public TimeSpan Duration { get; set; }= TimeSpan.Zero;
         
         public int EventId { get; set; }
-        public Array? EventImages { get; set; }
+        public List<string>? EventImages { get; set; }
         public List<int>? StageIds { get; set; }
         public decimal Price { get; set; }
 

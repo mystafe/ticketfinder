@@ -15,7 +15,7 @@ namespace ticketfinder.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,8 +28,15 @@ namespace ticketfinder.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Duration = table.Column<TimeSpan>(type: "time", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsOnSale = table.Column<bool>(type: "bit", nullable: false),
+                    IsAvailable = table.Column<bool>(type: "bit", nullable: false),
+                    AvgRating = table.Column<double>(type: "float", maxLength: 5, nullable: false),
+                    EventType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,8 +49,8 @@ namespace ticketfinder.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CountryId = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CountryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,33 +59,28 @@ namespace ticketfinder.Migrations
                         name: "FK_Cities_Countries_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Countries",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "EventDetails",
+                name: "EventImages",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Duration = table.Column<TimeSpan>(type: "time", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    IsOnSale = table.Column<bool>(type: "bit", nullable: false),
-                    IsAvailable = table.Column<bool>(type: "bit", nullable: false),
-                    AvgRating = table.Column<double>(type: "float", maxLength: 5, nullable: false),
-                    EventId = table.Column<int>(type: "int", nullable: false)
+                    UrlAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EventId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventDetails", x => x.Id);
+                    table.PrimaryKey("PK_EventImages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EventDetails_Events_EventId",
+                        name: "FK_EventImages_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -87,8 +89,8 @@ namespace ticketfinder.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FullAdress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GeoLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullAdress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GeoLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -107,14 +109,15 @@ namespace ticketfinder.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Firstname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Firstname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Middlename = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Lastname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Lastname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsValidated = table.Column<bool>(type: "bit", nullable: false),
+                    CustomerType = table.Column<int>(type: "int", nullable: false),
                     AddressId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -134,11 +137,11 @@ namespace ticketfinder.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OpenHour = table.Column<TimeSpan>(type: "time", nullable: false),
                     CloseHour = table.Column<TimeSpan>(type: "time", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    AddressId = table.Column<int>(type: "int", nullable: true),
+                    AddressId = table.Column<int>(type: "int", nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -148,7 +151,8 @@ namespace ticketfinder.Migrations
                         name: "FK_Places_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Places_Cities_CityId",
                         column: x => x.CityId,
@@ -185,6 +189,28 @@ namespace ticketfinder.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tickets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    DateOfPurchase = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    EventSeatId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tickets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tickets_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Stages",
                 columns: table => new
                 {
@@ -192,10 +218,10 @@ namespace ticketfinder.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsIndoor = table.Column<bool>(type: "bit", nullable: false),
-                    PlaceId = table.Column<int>(type: "int", nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: false),
                     CapacityNormal = table.Column<int>(type: "int", nullable: false),
-                    CapacityVip = table.Column<int>(type: "int", nullable: false)
+                    CapacityVip = table.Column<int>(type: "int", nullable: false),
+                    PlaceId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -209,24 +235,26 @@ namespace ticketfinder.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EventDetailStage",
+                name: "EventStages",
                 columns: table => new
                 {
-                    EventDetailsId = table.Column<int>(type: "int", nullable: false),
-                    StagesId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BasePrice = table.Column<double>(type: "float", nullable: false),
+                    StageId = table.Column<int>(type: "int", nullable: false),
+                    EventId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventDetailStage", x => new { x.EventDetailsId, x.StagesId });
+                    table.PrimaryKey("PK_EventStages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EventDetailStage_EventDetails_EventDetailsId",
-                        column: x => x.EventDetailsId,
-                        principalTable: "EventDetails",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_EventStages_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_EventDetailStage_Stages_StagesId",
-                        column: x => x.StagesId,
+                        name: "FK_EventStages_Stages_StageId",
+                        column: x => x.StageId,
                         principalTable: "Stages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -238,7 +266,7 @@ namespace ticketfinder.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     StageId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -259,53 +287,30 @@ namespace ticketfinder.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
                     IsSold = table.Column<bool>(type: "bit", nullable: false),
-                    IsOnSale = table.Column<bool>(type: "bit", nullable: false),
-                    EventDetailId = table.Column<int>(type: "int", nullable: false),
-                    SeatId = table.Column<int>(type: "int", nullable: false)
+                    EventId = table.Column<int>(type: "int", nullable: false),
+                    SeatId = table.Column<int>(type: "int", nullable: false),
+                    EventStageId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EventSeats", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EventSeats_EventDetails_EventDetailId",
-                        column: x => x.EventDetailId,
-                        principalTable: "EventDetails",
+                        name: "FK_EventSeats_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EventSeats_EventStages_EventStageId",
+                        column: x => x.EventStageId,
+                        principalTable: "EventStages",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_EventSeats_Seats_SeatId",
                         column: x => x.SeatId,
                         principalTable: "Seats",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tickets",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DateOfPurchase = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
-                    EventSeatId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tickets", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tickets_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Tickets_EventSeats_EventSeatId",
-                        column: x => x.EventSeatId,
-                        principalTable: "EventSeats",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -326,24 +331,34 @@ namespace ticketfinder.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventDetails_EventId",
-                table: "EventDetails",
+                name: "IX_EventImages_EventId",
+                table: "EventImages",
                 column: "EventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventDetailStage_StagesId",
-                table: "EventDetailStage",
-                column: "StagesId");
+                name: "IX_EventSeats_EventId",
+                table: "EventSeats",
+                column: "EventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventSeats_EventDetailId",
+                name: "IX_EventSeats_EventStageId",
                 table: "EventSeats",
-                column: "EventDetailId");
+                column: "EventStageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EventSeats_SeatId",
                 table: "EventSeats",
                 column: "SeatId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventStages_EventId",
+                table: "EventStages",
+                column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventStages_StageId",
+                table: "EventStages",
+                column: "StageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Places_AddressId",
@@ -379,17 +394,15 @@ namespace ticketfinder.Migrations
                 name: "IX_Tickets_CustomerId",
                 table: "Tickets",
                 column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tickets_EventSeatId",
-                table: "Tickets",
-                column: "EventSeatId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "EventDetailStage");
+                name: "EventImages");
+
+            migrationBuilder.DropTable(
+                name: "EventSeats");
 
             migrationBuilder.DropTable(
                 name: "Ratings");
@@ -398,16 +411,13 @@ namespace ticketfinder.Migrations
                 name: "Tickets");
 
             migrationBuilder.DropTable(
-                name: "Customers");
-
-            migrationBuilder.DropTable(
-                name: "EventSeats");
-
-            migrationBuilder.DropTable(
-                name: "EventDetails");
+                name: "EventStages");
 
             migrationBuilder.DropTable(
                 name: "Seats");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Events");

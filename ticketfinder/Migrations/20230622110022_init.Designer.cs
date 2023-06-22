@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ticketfinder.Context;
 
@@ -11,9 +12,10 @@ using ticketfinder.Context;
 namespace ticketfinder.Migrations
 {
     [DbContext(typeof(TicketFinderContext))]
-    partial class TicketFinderContextModelSnapshot : ModelSnapshot
+    [Migration("20230622110022_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,10 +58,11 @@ namespace ticketfinder.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CountryId")
+                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -78,6 +81,7 @@ namespace ticketfinder.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -93,34 +97,40 @@ namespace ticketfinder.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("AddressId")
+                    b.Property<int>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<int>("CustomerType")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Firstname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsValidated")
                         .HasColumnType("bit");
 
                     b.Property<string>("Lastname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Middlename")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -142,10 +152,10 @@ namespace ticketfinder.Migrations
                         .HasMaxLength(5)
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("Date")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<TimeSpan?>("Duration")
+                    b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
                     b.Property<int>("EventType")
@@ -161,6 +171,7 @@ namespace ticketfinder.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
@@ -186,6 +197,7 @@ namespace ticketfinder.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UrlAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -203,7 +215,7 @@ namespace ticketfinder.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("EventId")
+                    b.Property<int>("EventId")
                         .HasColumnType("int");
 
                     b.Property<int?>("EventStageId")
@@ -215,7 +227,7 @@ namespace ticketfinder.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int?>("SeatId")
+                    b.Property<int>("SeatId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -243,7 +255,7 @@ namespace ticketfinder.Migrations
                     b.Property<int?>("EventId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StageId")
+                    b.Property<int>("StageId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -263,22 +275,23 @@ namespace ticketfinder.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("AddressId")
+                    b.Property<int>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<int?>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan?>("CloseHour")
+                    b.Property<TimeSpan>("CloseHour")
                         .HasColumnType("time");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan?>("OpenHour")
+                    b.Property<TimeSpan>("OpenHour")
                         .HasColumnType("time");
 
                     b.HasKey("Id");
@@ -301,10 +314,10 @@ namespace ticketfinder.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EventId")
+                    b.Property<int>("EventId")
                         .HasColumnType("int");
 
                     b.Property<int>("RatingValue")
@@ -328,9 +341,10 @@ namespace ticketfinder.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StageId")
+                    b.Property<int>("StageId")
                         .HasColumnType("int");
 
                     b.Property<int>("Type")
@@ -364,6 +378,7 @@ namespace ticketfinder.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PlaceId")
@@ -387,7 +402,7 @@ namespace ticketfinder.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DateOfPurchase")
+                    b.Property<DateTime>("DateOfPurchase")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("EventSeatId")
@@ -416,7 +431,9 @@ namespace ticketfinder.Migrations
                 {
                     b.HasOne("ticketfinder.Models.ORM.Country", "Country")
                         .WithMany("Cities")
-                        .HasForeignKey("CountryId");
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Country");
                 });
@@ -425,7 +442,9 @@ namespace ticketfinder.Migrations
                 {
                     b.HasOne("ticketfinder.Models.ORM.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Address");
                 });
@@ -441,7 +460,9 @@ namespace ticketfinder.Migrations
                 {
                     b.HasOne("ticketfinder.Models.ORM.Event", "Event")
                         .WithMany()
-                        .HasForeignKey("EventId");
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ticketfinder.Models.ORM.EventStage", null)
                         .WithMany("EventSeats")
@@ -449,7 +470,9 @@ namespace ticketfinder.Migrations
 
                     b.HasOne("ticketfinder.Models.ORM.Seat", "Seat")
                         .WithMany()
-                        .HasForeignKey("SeatId");
+                        .HasForeignKey("SeatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Event");
 
@@ -464,7 +487,9 @@ namespace ticketfinder.Migrations
 
                     b.HasOne("ticketfinder.Models.ORM.Stage", "Stage")
                         .WithMany()
-                        .HasForeignKey("StageId");
+                        .HasForeignKey("StageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Stage");
                 });
@@ -473,7 +498,9 @@ namespace ticketfinder.Migrations
                 {
                     b.HasOne("ticketfinder.Models.ORM.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ticketfinder.Models.ORM.City", null)
                         .WithMany("Places")
@@ -486,11 +513,15 @@ namespace ticketfinder.Migrations
                 {
                     b.HasOne("ticketfinder.Models.ORM.Customer", "Customer")
                         .WithMany("Ratings")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ticketfinder.Models.ORM.Event", "Event")
                         .WithMany()
-                        .HasForeignKey("EventId");
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 
@@ -501,7 +532,9 @@ namespace ticketfinder.Migrations
                 {
                     b.HasOne("ticketfinder.Models.ORM.Stage", "Stage")
                         .WithMany("Seats")
-                        .HasForeignKey("StageId");
+                        .HasForeignKey("StageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Stage");
                 });

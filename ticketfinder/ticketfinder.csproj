@@ -19,6 +19,12 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Models\DTO\CityDTO\" />
+    <Folder Include="Models\DTO\CountryDTO\" />
+    <Folder Include="Models\DTO\TicketDTO\" />
+    <Folder Include="Models\DTO\AdressDTO\" />
+    <Folder Include="Models\DTO\RatingDTO\" />
+    <Folder Include="Models\DTO\SeatDTO\" />
   </ItemGroup>
 
 </Project>

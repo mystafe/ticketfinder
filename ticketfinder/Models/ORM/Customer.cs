@@ -3,6 +3,14 @@ using ticketfinder.Context;
 
 namespace ticketfinder.Models.ORM
 {
+    public enum CustomerType
+    {
+        Normal=1,
+        Student,
+        Disabled,
+        Child,
+        Old
+    }
     public class Customer
     {
         public int Id { get; set; }
@@ -14,10 +22,10 @@ namespace ticketfinder.Models.ORM
         public string? Email { get; set; }
         public string? Phone { get; set; }
         public bool IsValidated { get; set; } = false;
-        public int AddressId { get; set; }
-        public Address? Address { get; set; }
-        public ICollection<Rating>? Ratings { get; set; }
-        public ICollection<Ticket>? Tickets { get; set; }
+        public CustomerType CustomerType { get; set; }= CustomerType.Normal;
+        public virtual Address? Address { get; set; }
+        public List<Rating>? Ratings { get; set; }
+        public List<Ticket>? Tickets { get; set; }
 
     }
 }
