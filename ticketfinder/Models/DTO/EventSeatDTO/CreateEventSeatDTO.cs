@@ -5,7 +5,7 @@ namespace ticketfinder.Models.DTO.EventSeatDTO
     public class CreateEventSeatDTO
     {
 
-        public decimal Price { get; set; } = 0;
+        public decimal EventPrice { get; set; } = 0;
         public bool IsSold { get; set; } = false;
         public bool IsOnSale { get; set; } = true;
         public int EventDetailId { get; set; }

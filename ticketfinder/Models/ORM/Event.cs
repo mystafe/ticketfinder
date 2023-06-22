@@ -28,8 +28,33 @@ namespace ticketfinder.Models.ORM
         [MaxLength(5)]
         public double AvgRating { get; set; }
         public EventType EventType { get; set; }=EventType.None;
-        public List<EventImage>? EventImages { get; set; }
+        public List<EventImage> EventImages { get; set; }
         public List<EventStage>? EventStages { get; set; }
 
+
+        public void SetEventStage(List<Stage> stages)
+        {
+
+            //I am dying.. :(
+            EventStages = stages.Select(s => new EventStage()
+            {
+                BasePrice = Price,
+                EventId = Id,
+                Stage = s,
+                EventSeats = s.Seats.Select(seat => new EventSeat()
+                {
+                    EventId = Id,
+                    IsSold = false,
+                    EventPrice = Price,
+                    Seat = seat
+
+                }).ToList()
+                
+
+            }).ToList();
+
+        }
+
+       
     }
 }

@@ -3,11 +3,14 @@
     public class EventStage
     {
         public int Id { get; set; }
+
+        public string? Name { get; set; }
         public double BasePrice { get; set; }
         public int EventId { get; set; }
         public Stage? Stage { get; set; }
 
         public List<EventSeat>? EventSeats { get; set; }
+
 
         public void SetSeats(List<Seat> seats)
         {
@@ -15,7 +18,7 @@
                     new EventSeat()
                     {
                         IsSold = false,
-                        Price = s.Type == SeatType.Normal ? BasePrice : BasePrice * 1.5,
+                        EventPrice = s.Type == SeatType.Normal ? BasePrice : BasePrice * 1.5,
                         Seat = s,
                         EventId = EventId,
                         EventStageId=Id

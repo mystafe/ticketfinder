@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ticketfinder.Context;
 
@@ -11,9 +12,10 @@ using ticketfinder.Context;
 namespace ticketfinder.Migrations
 {
     [DbContext(typeof(TicketFinderContext))]
-    partial class TicketFinderContextModelSnapshot : ModelSnapshot
+    [Migration("20230622203821_init5")]
+    partial class init5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +58,7 @@ namespace ticketfinder.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CountryId")
+                    b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -206,14 +208,14 @@ namespace ticketfinder.Migrations
                     b.Property<int>("EventId")
                         .HasColumnType("int");
 
-                    b.Property<double>("EventPrice")
-                        .HasColumnType("float");
-
                     b.Property<int>("EventStageId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsSold")
                         .HasColumnType("bit");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<int?>("SeatId")
                         .HasColumnType("int");
@@ -240,9 +242,6 @@ namespace ticketfinder.Migrations
 
                     b.Property<int>("EventId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StageId")
                         .HasColumnType("int");
@@ -420,9 +419,7 @@ namespace ticketfinder.Migrations
                 {
                     b.HasOne("ticketfinder.Models.ORM.Country", "Country")
                         .WithMany("Cities")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
                 });

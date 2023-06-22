@@ -41,7 +41,7 @@ namespace ticketfinder.Controllers
         [HttpPost]
         public IActionResult CreateEventStage(CreateEventStageDTO model)
         {
-            if (!ModelState.IsValid||model==null||model.StageId==null||model.BasePrice==null)
+            if (!ModelState.IsValid||model.EventId==null||model.StageId==null)
             {
                 return BadRequest(ModelState);
             }
@@ -59,9 +59,10 @@ namespace ticketfinder.Controllers
 
             EventStage eventStage=new EventStage();
 
-            eventStage.BasePrice = model.BasePrice;
+            eventStage.BasePrice = @event.Price;
             eventStage.Stage = stage;
             eventStage.EventId= model.EventId;
+            eventStage.Name = @event.Name;
 
             List<Seat> seats = stage.Seats;
             eventStage.SetSeats(seats);

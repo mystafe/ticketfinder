@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ticketfinder.Context;
 using ticketfinder.Models.DTO.TicketDTO;
 using ticketfinder.Models.ORM;
@@ -18,7 +19,7 @@ namespace ticketfinder.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetTickets()
         {
             var results = context.Tickets.ToList();
 
@@ -28,6 +29,20 @@ namespace ticketfinder.Controllers
 
             }
             return Ok(results);
+        }
+
+
+        [HttpGet("{id}")]
+        public IActionResult GetTicket(int id)
+        {
+            if (context.Tickets == null) return NotFound();
+
+            var result = context.Tickets.Include(t=>t.Customer).Include(t=>t.Event).FirstOrDefault(t=>t.Id==id);
+
+            if (result==null)
+                return NotFound();
+
+            return Ok(result);
         }
 
         [HttpPost]
@@ -53,7 +68,6 @@ namespace ticketfinder.Controllers
                 return BadRequest("Event Seat is not found");
             }
             Ticket ticket = new Ticket();
-
             double discount=0;
             switch (customer.CustomerType)
             {
@@ -64,21 +78,15 @@ namespace ticketfinder.Controllers
                 default : discount = 0; break;
             }
 
-
-            ticket.Price =  eventSeat.Price*(1-discount);
+            ticket.Price =  eventSeat.EventPrice*(1-discount);
             ticket.CustomerId=customer.Id;
             ticket.EventSeatId = eventSeat.Id;
             ticket.DateOfPurchase = model.DateOfPurchase;
+            ticket.EventId = eventSeat.EventId;
 
-            context.Tickets.Add(ticket);
-
-            customer.Tickets.Add(ticket);
-            
-
+            context.Tickets.Add(ticket);           
             eventSeat.IsSold = true;
-
-            context.SaveChanges();
-            
+            context.SaveChanges();            
             return Ok(ticket);
         }
 

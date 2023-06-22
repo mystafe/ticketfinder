@@ -38,10 +38,10 @@ namespace ticketfinder.Controllers
                     IsOnSale = e.IsOnSale,
                 }).ToList();
 
-            if (events.Count==0)
+            if (events.Count == 0)
             {
                 return NotFound();
-                
+
             }
             return Ok(events);
         }
@@ -51,7 +51,7 @@ namespace ticketfinder.Controllers
         public IActionResult GetEvent(int id)
         {
 
-            Event myEvent = context.Events.Include(e=>e.EventStages).Include(e=>e.EventImages).AsQueryable().SingleOrDefault(e => e.Id == id);
+            Event myEvent = context.Events.Include(e => e.EventStages).Include(e => e.EventImages).AsQueryable().SingleOrDefault(e => e.Id == id);
             if (myEvent == null)
             {
                 return NotFound();
@@ -59,15 +59,16 @@ namespace ticketfinder.Controllers
             }
 
             ResponseEventDTO responseEvent = new ResponseEventDTO();
+            responseEvent.Id = myEvent.Id;
             responseEvent.EventStages = myEvent.EventStages;
-            responseEvent.EventType=myEvent.EventType;
+            responseEvent.EventType = myEvent.EventType;
             responseEvent.Duration = myEvent.Duration;
             responseEvent.IsOnSale = myEvent.IsOnSale;
             responseEvent.IsActive = myEvent.IsActive;
             responseEvent.IsAvailable = myEvent.IsAvailable;
-            responseEvent.Date=myEvent.Date;
-            responseEvent.Name=myEvent.Name;
-            responseEvent.Price=myEvent.Price;
+            responseEvent.Date = myEvent.Date;
+            responseEvent.Name = myEvent.Name;
+            responseEvent.Price = myEvent.Price;
             responseEvent.EventImages = myEvent.EventImages;
 
             return Ok(responseEvent);
@@ -76,27 +77,33 @@ namespace ticketfinder.Controllers
         [HttpPost]
         public IActionResult CreateEvent(CreateEventDTO eventmodel)
         {
-            if (eventmodel==null)
+            if (eventmodel == null)
             {
                 return BadRequest();
-                
+
             }
 
-            Event newEvent=new Event();
+            Event newEvent = new Event();
             newEvent.Name = eventmodel.Name;
             newEvent.Date = eventmodel.Date;
 
-            List <EventStage> eventStages=new List<EventStage>();
-           // newEvent.EventStages = eventStages;//fix will come
+
             newEvent.EventType = eventmodel.EventType;
             newEvent.Duration = eventmodel.Duration;
-            //newEvent.EventImages = eventmodel.EventImages;
             newEvent.Price = eventmodel.Price;
 
+            var eventImageList = eventmodel.EventImages.Split(',').ToList();
+            newEvent.EventImages = eventImageList.Select(e => new EventImage() { UrlAddress = e, Description = e }).ToList();
+
+            if (eventmodel.EventStageIds != null)
+            {
+                var stageIdList = eventmodel.EventStageIds.ToList();
+                newEvent.EventStages = context.EventStages.Include(es => es.EventSeats)
+                    .Where(es => stageIdList.Contains(es.Id)).ToList();
+            }
+            else newEvent.EventStages = null;
             context.Events.Add(newEvent);
             context.SaveChanges();
-
-
             return Ok(newEvent);
         }
 
