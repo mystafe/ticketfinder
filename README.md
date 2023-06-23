@@ -39,7 +39,12 @@ dotnet run
 The application will start running on http://localhost:7169.
 
 **API Documentation**
-Endpoints are under construction. Current ones:
+Endpoints are mostly consructed:
+
+https://www.postman.com/mystafe/workspace/mypublicworkspace/collection/26765413-97a76028-36e3-4dd7-b84f-ef1daebc1b97
+
+https://documenter.getpostman.com/view/26765413/2s93z5Ajso
+
 ![image](https://github.com/mystafe/ticketfinder/assets/75567558/dedd738f-5aa3-4c27-af0a-8048302a86ab)
 
 **_Customer Endpoints:_**
@@ -47,6 +52,65 @@ Endpoints are under construction. Current ones:
 
 **_EventDetail Endpoints:_**
 ![image](https://github.com/mystafe/ticketfinder/assets/75567558/ab55f744-d985-49f0-b34d-02365ece85f2)
+
+**_Address Endpoints_**
+GET​/api​/Address
+POST​/api​/Address
+GET​/api​/Address​/{id}
+
+**_City Endpoints_**
+GET​/api​/City
+POST​/api​/City
+GET​/api​/City​/{id}
+
+**_Country Endpoints_**
+GET​/api​/Country
+POST​/api​/Country
+GET​/api​/Country​/{id}
+
+**_Customer Endpoints_**
+GET​/api​/Customer
+POST​/api​/Customer
+GET​/api​/Customer​/{id}
+
+**_Event Endpoints_**
+GET​/api​/Event
+POST​/api​/Event
+GET​/api​/Event​/{id}
+
+**_EventImage Endpoints_**
+GET​/api​/EventImage
+POST​/api​/EventImage
+GET​/api​/EventImage​/{id}
+
+**_EventSeat Endpoints_**
+GET​/api​/EventSeat
+GET​/api​/EventSeat​/{id}
+
+**_EventStage Endpoints_**
+GET​/api​/EventStage
+POST​/api​/EventStage
+GET​/api​/EventStage​/{id}
+
+**_Place Endpoints_**
+GET​/api​/Place
+POST​/api​/Place
+GET​/api​/Place​/{id}
+
+**_Rating Endpoints_**
+GET​/api​/Rating
+POST​/api​/Rating
+GET​/api​/Rating​/{id}
+
+**_Stage Endpoints_**
+GET​/api​/Stage
+POST​/api​/Stage
+GET​/api​/Stage​/{id}
+
+**_Ticket Endpoints_**
+GET​/api​/Ticket
+POST​/api​/Ticket
+GET​/api​/Ticket​/{id}
 
 
 **Contributing**
