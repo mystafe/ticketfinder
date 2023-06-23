@@ -12,7 +12,7 @@ namespace ticketfinder.Models.DTO.EventDTO
         public TimeSpan Duration { get; set; } = TimeSpan.Zero;
         public EventType EventType { get; set; } //dropdown
         public string EventImages { get; set; }
-        public int[]? EventStageIds { get; set; } //dropdown çoklu seçim //price'a göre stage'leri event stage'lere çevirecek..
+        public int[]? StageIds { get; set; } //dropdown çoklu seçim //price'a göre stage'leri event stage'lere çevirecek..
 
    
     }

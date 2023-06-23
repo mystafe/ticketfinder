@@ -95,11 +95,18 @@ namespace ticketfinder.Controllers
             var eventImageList = eventmodel.EventImages.Split(',').ToList();
             newEvent.EventImages = eventImageList.Select(e => new EventImage() { UrlAddress = e, Description = e }).ToList();
 
-            if (eventmodel.EventStageIds != null)
+            if (eventmodel.StageIds != null)
             {
-                var stageIdList = eventmodel.EventStageIds.ToList();
-                newEvent.EventStages = context.EventStages.Include(es => es.EventSeats)
-                    .Where(es => stageIdList.Contains(es.Id)).ToList();
+                var stageIdList = eventmodel.StageIds.ToList();
+                newEvent.EventStages = null; 
+                    
+                var myStages= context.Stages.Include(s => s.Seats)
+                    .Where(s => stageIdList.Contains(s.Id)).ToList();
+                var myEventStages = context.EventStages.Include(es => es.EventSeats).Where(es => myStages.Contains(es.Stage)).ToList();
+                
+                newEvent.EventStages = myEventStages;
+
+
             }
             else newEvent.EventStages = null;
             context.Events.Add(newEvent);
