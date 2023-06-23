@@ -50,9 +50,11 @@ namespace ticketfinder.Controllers
                 return BadRequest();
             EventImage eventImage = new EventImage();
 
+            
             eventImage.Description = model.Description;
             eventImage.UrlAddress = model.UrlAddress;
             context.EventImages.Add(eventImage);
+            context.SaveChanges();
 
             return Ok(eventImage);
             
