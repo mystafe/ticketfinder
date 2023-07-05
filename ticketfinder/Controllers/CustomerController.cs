@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Net;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ticketfinder.Context;
@@ -26,7 +27,7 @@ namespace ticketfinder.Controllers
                 Id = c.Id,
                 Fullname = c.Middlename != null ? c.Firstname + " " + c.Middlename + " " + c.Lastname : c.Firstname + " " + c.Lastname,
                 Email = c.Email,
-                FullAdress = c.Address != null ? c.Address.FullAdress : "",
+                FullAddress = c.Address != null ? c.Address.FullAddress : "",
                 CityName = c.Address != null && c.Address.City != null ? c.Address.City.Name : "",
                 Username = c.Username,
                 Password = c.Password,
@@ -55,7 +56,7 @@ namespace ticketfinder.Controllers
                     Password = customer.Password,
                     Phone = customer.Phone,
                     Email = customer.Email,
-                    FullAdress = customer.Address != null ? customer.Address.FullAdress : "",
+                    FullAddress = customer.Address != null ? customer.Address.FullAddress : "",
                     CityName = customer.Address != null && customer.Address.City != null ? customer.Address.City.Name : "",
                 };
                 return Ok(result);
@@ -78,22 +79,40 @@ namespace ticketfinder.Controllers
             customer.Phone = model.Phone;
             customer.Password = model.Password;
             customer.Username = model.Username;
-
-            City city = context.Cities.FirstOrDefault(c => c.Id == model.CityId);
-            if (city == null)
+            if (model.AddressId!=null)
             {
-                return BadRequest("City is not found");
+                Address address = context.Addresses.FirstOrDefault(a => a.Id == model.AddressId);
+                if (address==null)
+                {
+                    return BadRequest("Addres is not defined!");
+
+                }
+
+                customer.Address = address;
+            }
+            else
+            {
+                City city = context.Cities.FirstOrDefault(c => c.Id == model.CityId);
+                if (city == null)
+                {
+                    return BadRequest("City is not found");
+                }
+
+                if (model.FullAddress == null) return BadRequest("Address is requied");
+                Address address = new Address();
+
+                address.City = city;
+
+                address.FullAddress = model.FullAddress;
+                address.GeoLocation = "[" + model.Latitude + "," + model.Longitude + "]";
+
+
+                context.Addresses.Add(address);
+                customer.Address = address; ;
+
             }
 
-
-            Address adress = new Address()
-            {
-                City = city,
-                FullAdress = model.FullAdress,
-                GeoLocation = model.GeoLocation
-            };
-            context.Addresses.Add(adress);
-            customer.Address = adress; ;
+         
             context.Customers.Add(customer);
             context.SaveChanges();
 

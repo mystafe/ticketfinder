@@ -92,25 +92,39 @@ namespace ticketfinder.Controllers
             newEvent.Duration = eventmodel.Duration;
             newEvent.Price = eventmodel.Price;
 
+            if (eventmodel.EventImages == "")
+                eventmodel.EventImages = "https://acs.digitellinc.com/assets/images/image_placeholder.jpg";
+
             var eventImageList = eventmodel.EventImages.Split(',').ToList();
             newEvent.EventImages = eventImageList.Select(e => new EventImage() { UrlAddress = e, Description = e }).ToList();
+
+
+            List<Stage> myStages= new List<Stage>();
 
             if (eventmodel.StageIds != null)
             {
                 var stageIdList = eventmodel.StageIds.ToList();
-                newEvent.EventStages = null; 
-                    
-                var myStages= context.Stages.Include(s => s.Seats)
-                    .Where(s => stageIdList.Contains(s.Id)).ToList();
-                var myEventStages = context.EventStages.Include(es => es.EventSeats).Where(es => myStages.Contains(es.Stage)).ToList();
                 
-                newEvent.EventStages = myEventStages;
 
+      
+                 myStages= context.Stages.Include(s => s.Seats).AsQueryable()
+                    .Where(stage => stageIdList.Contains(stage.Id)).ToList();
+
+
+                //newEvent.SetEventStage(myStages);
 
             }
-            else newEvent.EventStages = null;
+            else  if (eventmodel.StageIds == null) newEvent.EventStages = null;
+
+
             context.Events.Add(newEvent);
             context.SaveChanges();
+
+            var event3 = context.Events.Include(e=>e.EventStages).FirstOrDefault(e => e.Name == newEvent.Name);
+
+            event3.SetEventStage(myStages);
+            context.SaveChanges();
+            
             return Ok(newEvent);
         }
 

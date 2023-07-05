@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ticketfinder.Context;
 
@@ -11,9 +12,10 @@ using ticketfinder.Context;
 namespace ticketfinder.Migrations
 {
     [DbContext(typeof(TicketFinderContext))]
-    partial class TicketFinderContextModelSnapshot : ModelSnapshot
+    [Migration("20230630080925_initAfterChange")]
+    partial class initAfterChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +35,7 @@ namespace ticketfinder.Migrations
                     b.Property<int?>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FullAdress")
+                    b.Property<string>("FullAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -404,6 +406,8 @@ namespace ticketfinder.Migrations
 
                     b.HasIndex("CustomerId");
 
+                    b.HasIndex("EventId");
+
                     b.ToTable("Tickets");
                 });
 
@@ -479,11 +483,13 @@ namespace ticketfinder.Migrations
                         .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("ticketfinder.Models.ORM.City", null)
+                    b.HasOne("ticketfinder.Models.ORM.City", "City")
                         .WithMany("Places")
                         .HasForeignKey("CityId");
 
                     b.Navigation("Address");
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("ticketfinder.Models.ORM.Rating", b =>
@@ -523,11 +529,21 @@ namespace ticketfinder.Migrations
 
             modelBuilder.Entity("ticketfinder.Models.ORM.Ticket", b =>
                 {
-                    b.HasOne("ticketfinder.Models.ORM.Customer", null)
+                    b.HasOne("ticketfinder.Models.ORM.Customer", "Customer")
                         .WithMany("Tickets")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ticketfinder.Models.ORM.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("ticketfinder.Models.ORM.City", b =>

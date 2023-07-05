@@ -21,7 +21,7 @@ namespace ticketfinder.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var results=context.Addresses.ToList();
+            var results=context.Addresses.Include(a=>a.City).ToList();
 
             if (results.Count==0)
             {
@@ -63,11 +63,42 @@ namespace ticketfinder.Controllers
                 return BadRequest("City is not found!");
             }
             Address address = new Address();
-            address.FullAdress = model.FullAdress;     
+            address.FullAddress = model.FullAddress;     
             address.City = city;
-            address.GeoLocation = model.GeoLocation;
+            address.GeoLocation ="["+model.Latitude +","+model.Longitude+"]" ;
             context.Addresses.Add(address);
+            context.SaveChanges();
             return Ok(address);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            if (id == null) return BadRequest("Id can not be null");
+            var address = context.Addresses.Include(a => a.City).AsQueryable().FirstOrDefault(a => a.Id == id);
+
+            if (address == null) return NotFound();
+
+            var places = context.Places.Include(p => p.Address)
+                .AsQueryable()
+                .Where(p => p.Address.Id == address.Id)
+                .ToList();
+
+            var customers = context.Customers.Include(c => c.Address)
+                .AsQueryable()
+                .Where(c => c.Address.Id == address.Id)
+                .ToList();
+
+            if (places.Count==0 && customers.Count==0)
+            {
+                context.Addresses.Remove(address);
+                context.SaveChanges();
+                return Ok(address);
+            }
+
+
+
+            return BadRequest("the address in use");
         }
     }
 }

@@ -24,7 +24,7 @@ namespace ticketfinder.Controllers
         {
             if (context.Ratings == null) return NotFound();
 
-            var ratings = context.Ratings.Include(r=>r.Customer).ToList();
+            var ratings = context.Ratings.Include(r=>r.Customer).Include(r=>r.Event).AsQueryable().ToList();
 
             return Ok(ratings);
         }

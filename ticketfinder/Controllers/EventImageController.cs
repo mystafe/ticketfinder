@@ -35,6 +35,7 @@ namespace ticketfinder.Controllers
         public IActionResult Get(int id)
         {
             var result = context.EventImages.FirstOrDefault(x => x.Id == id);
+           
 
             if (result == null)
                 return NotFound();
@@ -48,16 +49,35 @@ namespace ticketfinder.Controllers
                 return BadRequest(ModelState);
             if (model==null)
                 return BadRequest();
+
+            Event @event = context.Events.FirstOrDefault(e => e.Id == model.EventId);
+
+            if (@event == null) return BadRequest("Event is not defined!");
             EventImage eventImage = new EventImage();
 
             
+            
             eventImage.Description = model.Description;
             eventImage.UrlAddress = model.UrlAddress;
+            eventImage.EventId = model.EventId;
             context.EventImages.Add(eventImage);
             context.SaveChanges();
 
-            return Ok(eventImage);
-            
+            return Ok(eventImage);         
+
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var eventImage = context.EventImages.FirstOrDefault(e => e.Id == id);
+
+            if (eventImage == null) return NotFound();
+
+
+            context.EventImages.Remove(eventImage);
+            context.SaveChanges();
+            return Ok( "The record is deleted: " + eventImage.Id );
 
         }
     }

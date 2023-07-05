@@ -67,6 +67,9 @@ namespace ticketfinder.Controllers
             {
                 return BadRequest("Event Seat is not found");
             }
+
+            if (eventSeat.IsSold) return BadRequest("Event Seat is not availabe");
+
             Ticket ticket = new Ticket();
             double discount=0;
             switch (customer.CustomerType)

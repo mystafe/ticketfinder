@@ -36,22 +36,31 @@ namespace ticketfinder.Models.ORM
         {
 
             //I am dying.. :(
+
+     
             EventStages = stages.Select(s => new EventStage()
             {
                 BasePrice = Price,
                 EventId = Id,
                 Stage = s,
-                EventSeats = s.Seats.Select(seat => new EventSeat()
+                Name= this.Name+" at "+ s.Name,
+
+                
+
+          
+                 EventSeats = s.Seats.Select(seat => new EventSeat()
                 {
                     EventId = Id,
                     IsSold = false,
-                    EventPrice = Price,
+                    EventPrice = seat.Type == SeatType.Normal ? Price : Price * 1.5,
                     Seat = seat
+                    
 
                 }).ToList()
                 
 
             }).ToList();
+
 
         }
 

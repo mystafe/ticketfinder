@@ -12,6 +12,7 @@ namespace ticketfinder.Models.ORM
         public TimeSpan? CloseHour { get; set; }
         public bool IsActive { get; set; }
         public virtual Address? Address { get; set; }
+        public virtual City? City  { get; set; }
         public List<Stage>? Stages  { get; set; }
     }
 }

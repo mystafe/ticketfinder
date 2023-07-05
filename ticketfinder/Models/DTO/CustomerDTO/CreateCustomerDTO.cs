@@ -12,8 +12,11 @@ namespace ticketfinder.Models.DTO.CustomerDTO
         public string Password { get; set; }
         public string Email { get; set; }
         public string? Phone { get; set; }
-        public int CityId { get; set; }
-        public string? FullAdress { get; set; }
-        public string? GeoLocation { get; set; }
+        public int? AddressId { get; set; }
+        public int? CityId { get; set; }
+        public string? FullAddress { get; set; }
+        public string? Latitude { get; set; } = "42.1";
+        public string? Longitude { get; set; } = "28.1";
+
     }
 }

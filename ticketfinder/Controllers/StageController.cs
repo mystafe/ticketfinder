@@ -95,5 +95,54 @@ namespace ticketfinder.Controllers
             context.SaveChanges();
             return Ok(stage);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteStage(int id)
+        {
+            if (id == null) return BadRequest("id can not be null");
+            var stage = context.Stages.Include(s => s.Place).Include(s => s.Seats).FirstOrDefault(s => s.Id == id);
+            if (stage == null) return NotFound();
+            var seats = stage.Seats;       
+            var eventStages = context.EventStages.Include(es => es.Stage).AsQueryable().Where(es => es.Stage.Id == stage.Id).ToList();
+            var eventStagesIds = eventStages.Select(es => es.Id).ToList();
+            var eventSeats = context.EventSeats.AsEnumerable()
+                .Where(ev => eventStagesIds.Contains(ev.EventStageId))
+                .ToList();
+            var events = context.Events
+                .Include(e => e.EventStages)
+                .Where(e => e.EventStages.Any(es => eventStagesIds.Contains(es.Id)))
+                .ToList();
+             var eventIds = events.Select(ev => ev.Id);
+            var eventImages = context.EventImages.Where(ei => eventIds.Contains((int)ei.EventId)).ToList();
+            var ratings = context.Ratings.Include(r => r.Event).Where(r => eventIds.Contains(r.Event.Id)).ToList();
+            if (eventImages.Any())
+            {
+                context.EventImages.RemoveRange(eventImages);
+            }
+            if (ratings.Any())
+            {
+                context.Ratings.RemoveRange(ratings);
+            }
+            if (eventSeats.Any())
+            {
+                context.EventSeats.RemoveRange(eventSeats);
+            }
+            if (eventStages.Any())
+            {
+                context.EventStages.RemoveRange(eventStages);
+            }
+
+            if (events.Any())
+            {
+                context.Events.RemoveRange(events);
+            }
+            if (seats.Any())
+            {
+                context.Seats.RemoveRange(seats);
+            }
+            context.Stages.RemoveRange(stage);            
+            context.SaveChanges();
+            return Ok(stage);
+        }
     }
 }

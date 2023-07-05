@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>d23d5a78-b137-4567-b19f-9fdf230e20ef</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,4 +25,67 @@
     <Folder Include="Models\DTO\SeatDTO\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\oldmig\20230622110022_init.cs" />
+    <Compile Remove="Migrations\oldmig\20230622110022_init.Designer.cs" />
+    <Compile Remove="Migrations\oldmig\20230622115237_init2.cs" />
+    <Compile Remove="Migrations\oldmig\20230622115237_init2.Designer.cs" />
+    <Compile Remove="Migrations\oldmig\20230622122407_init3.cs" />
+    <Compile Remove="Migrations\oldmig\20230622122407_init3.Designer.cs" />
+    <Compile Remove="Migrations\oldmig\20230622165902_init4.cs" />
+    <Compile Remove="Migrations\oldmig\20230622165902_init4.Designer.cs" />
+    <Compile Remove="Migrations\oldmig\20230622203821_init5.cs" />
+    <Compile Remove="Migrations\oldmig\20230622203821_init5.Designer.cs" />
+    <Compile Remove="Migrations\oldmig\20230622212238_init6.cs" />
+    <Compile Remove="Migrations\oldmig\20230622212238_init6.Designer.cs" />
+    <Compile Remove="Migrations\oldmig\20230622224923_init7.cs" />
+    <Compile Remove="Migrations\oldmig\20230622224923_init7.Designer.cs" />
+    <Compile Remove="Migrations\oldmig\20230622230501_init8.cs" />
+    <Compile Remove="Migrations\oldmig\20230622230501_init8.Designer.cs" />
+    <Compile Remove="Migrations\oldmig\20230627150907_first.cs" />
+    <Compile Remove="Migrations\oldmig\20230627150907_first.Designer.cs" />
+    <Compile Remove="Migrations\oldmig\20230627151055_first2.cs" />
+    <Compile Remove="Migrations\oldmig\20230627151055_first2.Designer.cs" />
+    <Compile Remove="Migrations\20230622110022_init.cs" />
+    <Compile Remove="Migrations\20230622115237_init2.Designer.cs" />
+    <Compile Remove="Migrations\20230622230501_init8.Designer.cs" />
+    <Compile Remove="Migrations\20230622203821_init5.cs" />
+    <Compile Remove="Migrations\20230622203821_init5.Designer.cs" />
+    <Compile Remove="Migrations\20230622224923_init7.Designer.cs" />
+    <Compile Remove="Migrations\20230627150907_first.Designer.cs" />
+    <Compile Remove="Migrations\20230627151055_first2.cs" />
+    <Compile Remove="Migrations\20230622212238_init6.Designer.cs" />
+    <Compile Remove="Migrations\20230622115237_init2.cs" />
+    <Compile Remove="Migrations\20230622122407_init3.cs" />
+    <Compile Remove="Migrations\20230627150907_first.cs" />
+    <Compile Remove="Migrations\20230622110022_init.Designer.cs" />
+    <Compile Remove="Migrations\20230622165902_init4.cs" />
+    <Compile Remove="Migrations\20230622212238_init6.cs" />
+    <Compile Remove="Migrations\20230627151055_first2.Designer.cs" />
+    <Compile Remove="Migrations\20230622224923_init7.cs" />
+    <Compile Remove="Migrations\20230622122407_init3.Designer.cs" />
+    <Compile Remove="Migrations\20230622165902_init4.Designer.cs" />
+    <Compile Remove="Migrations\20230622230501_init8.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622110022_init.Designer.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622110022_init.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622115237_init2.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622115237_init2.Designer.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622165902_init4.Designer.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622203821_init5.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622203821_init5.Designer.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622224923_init7.Designer.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622230501_init8.Designer.cs" />
+    <Compile Remove="Migrations\oldmig2\20230627150907_first.cs" />
+    <Compile Remove="Migrations\oldmig2\TicketFinderContextModelSnapshot.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622122407_init3.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622122407_init3.Designer.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622165902_init4.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622212238_init6.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622212238_init6.Designer.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622224923_init7.cs" />
+    <Compile Remove="Migrations\oldmig2\20230627150907_first.Designer.cs" />
+    <Compile Remove="Migrations\oldmig2\20230627151055_first2.cs" />
+    <Compile Remove="Migrations\oldmig2\20230627151055_first2.Designer.cs" />
+    <Compile Remove="Migrations\oldmig2\20230622230501_init8.cs" />
+  </ItemGroup>
 </Project>

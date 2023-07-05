@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ticketfinder.Context;
@@ -38,6 +39,16 @@ namespace ticketfinder.Controllers
             return Ok(eventStage);
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteStage(int id)
+        {
+  
+
+
+            return Ok("Not implemented yet");
+        }
+
+
         [HttpPost]
         public IActionResult CreateEventStage(CreateEventStageDTO model)
         {
@@ -69,6 +80,7 @@ namespace ticketfinder.Controllers
             context.EventStages.Add(eventStage);
 
             context.SaveChanges();
+
 
 
 
