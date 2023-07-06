@@ -62,6 +62,20 @@ namespace ticketfinder.Controllers
 
             return Ok(rating);
         }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteRating(int id) {
+
+            if (id == null) return BadRequest("Id can not be null");
+            var rating = context.Ratings.FirstOrDefault(r => r.Id == id);
+
+            if (rating == null) return NotFound();
+
+            context.Ratings.Remove(rating);
+            context.SaveChanges();
+
+
+            return Ok(rating);
+        }
 
 
     }

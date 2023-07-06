@@ -89,6 +89,8 @@ namespace ticketfinder.Controllers
                 .Where(c => c.Address.Id == address.Id)
                 .ToList();
 
+            
+
             if (places.Count==0 && customers.Count==0)
             {
                 context.Addresses.Remove(address);

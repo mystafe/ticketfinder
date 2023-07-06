@@ -42,7 +42,21 @@ namespace ticketfinder.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteStage(int id)
         {
-  
+
+            if (id == null) return BadRequest("id can not be null");
+
+            var eventStage = context.EventStages.Include(e=>e.EventSeats).FirstOrDefault(e => e.Id == id);
+            if (eventStage == null) return NotFound();
+
+            var evetSeats = eventStage.EventSeats.ToList();
+
+            if( evetSeats.Count>0)
+            {
+                context.EventSeats.RemoveRange(evetSeats);
+            }
+            context.EventStages.Remove(eventStage);
+
+            context.SaveChanges();
 
 
             return Ok("Not implemented yet");

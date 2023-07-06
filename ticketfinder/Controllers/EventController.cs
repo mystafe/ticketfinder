@@ -128,5 +128,47 @@ namespace ticketfinder.Controllers
             return Ok(newEvent);
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteEvent(int id)
+        {
+            if (id == null) return BadRequest("Id can not be null!");
+
+            var @event = context.Events.Include(e => e.EventImages).Include(e => e.EventStages).AsQueryable().FirstOrDefault(e => e.Id == id);
+            if (@event == null) return NotFound();
+
+            var eventImages = context.EventImages.Where(e => e.EventId == @event.Id).ToList();
+
+            var eventSeats = context.EventSeats.Where(e => e.EventId == @event.Id).ToList();
+
+            var ratings = context.Ratings.Include(r => r.Event).AsQueryable()
+                .Where(r => r.Event.Id == @event.Id)
+                .ToList();
+
+            var eventStages = context.EventStages.Where(e => e.EventId == @event.Id).ToList();
+
+            if (eventImages.Count > 0)
+            {
+                context.EventImages.RemoveRange(eventImages);
+            }
+            if (ratings.Count > 0)
+            {
+                context.Ratings.RemoveRange(ratings);
+            }
+            if (eventSeats.Count > 0)
+            {
+                context.EventSeats.RemoveRange(eventSeats);
+            }
+            if (eventStages.Count > 0)
+            {
+                context.EventStages.RemoveRange(eventStages);
+            }
+            context.Events.Remove(@event);
+
+            context.SaveChanges();
+
+
+            return Ok(@event);
+        }
+
     }
 }

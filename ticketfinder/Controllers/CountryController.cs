@@ -50,5 +50,26 @@ namespace ticketfinder.Controllers
 
             return Ok(country);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCountry(int id) {
+
+            if (id == null) return BadRequest("id can not be null!");
+
+            var country = context.Countries.Find(id);
+            if (country == null) return NotFound();
+
+            var city = context.Cities.FirstOrDefault(c => c.CountryId == id);
+
+            if (city == null) {
+                context.Countries.Remove(country);
+                context.SaveChanges();
+                return Ok(country);
+;            }
+            else
+            {
+                return BadRequest(" There is a city relation for the related country!"+city.Name+" , "+ country.Name);
+             }
+        }
     }
 }

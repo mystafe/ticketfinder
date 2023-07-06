@@ -92,6 +92,19 @@ namespace ticketfinder.Controllers
             context.SaveChanges();            
             return Ok(ticket);
         }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteTicket(int id) {
+
+            if (id == null) return BadRequest("Id can not be null!");
+
+            var ticket = context.Tickets.FirstOrDefault(t => t.Id == id);
+            if (ticket == null) return NotFound();
+
+            context.Tickets.Remove(ticket);
+            context.SaveChanges();
+
+            return Ok(ticket);
+        }
 
 
     }

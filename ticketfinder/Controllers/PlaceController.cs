@@ -88,5 +88,32 @@ namespace ticketfinder.Controllers
             context.SaveChanges();
             return Ok(place);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCountry(int id)
+        {
+
+            if (id == null) return BadRequest("id can not be null!");
+
+            var place = context.Places.Find(id);
+            if (place == null) return NotFound();
+
+            var stage = context.Stages.FirstOrDefault(s => s.PlaceId == id);
+
+            if (stage == null)
+            {
+                context.Places.Remove(place);
+                context.SaveChanges();
+                return Ok(place);
+                ;
+            }
+            else
+            {
+                return BadRequest(" There is a stage relation for the related place!" + stage.Name + " , " + place.Name);
+            }
+        }
+
+
+
     }
 }

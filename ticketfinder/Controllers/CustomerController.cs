@@ -120,5 +120,31 @@ namespace ticketfinder.Controllers
 
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCountry(int id)
+        {
+
+            if (id == null) return BadRequest("id can not be null!");
+
+            var customer = context.Customers.Find(id);
+            if (customer == null) return NotFound();
+
+            var rating = context.Ratings.Include(r=>r.Customer).FirstOrDefault(r => r.Customer.Id == id);
+            var ticket = context.Tickets.FirstOrDefault(t => t.CustomerId == id);
+
+            if (rating == null&&ticket==null)
+            {
+                context.Customers.Remove(customer);
+                context.SaveChanges();
+                return Ok(customer);
+                ;
+            }
+            else
+            {
+                return BadRequest(" There is a rating or ticket relation for the related customer! ticket:"
+                    + ticket?.EventId + " / rating: "+rating?.Id +" , " + customer.Firstname+" " +customer.Lastname);
+            }
+        }
+
     }
 }
