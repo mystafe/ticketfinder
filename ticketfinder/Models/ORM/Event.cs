@@ -20,6 +20,7 @@ namespace ticketfinder.Models.ORM
         public double Price { get; set; }
         public DateTime? Date { get; set; }= DateTime.Now;
         public TimeSpan? Duration { get; set; }=TimeSpan.Zero;
+        public string? Description { get; set; }
         public bool IsActive { get; set; } = true;
         public bool IsOnSale { get; set; }=true;
         public bool IsAvailable { get; set; } = true;
@@ -34,8 +35,6 @@ namespace ticketfinder.Models.ORM
 
         public void SetEventStage(List<Stage> stages)
         {
-
-            //I am dying.. :(
 
      
             EventStages = stages.Select(s => new EventStage()

@@ -28,6 +28,7 @@ namespace ticketfinder.Controllers
                 Fullname = c.Middlename != null ? c.Firstname + " " + c.Middlename + " " + c.Lastname : c.Firstname + " " + c.Lastname,
                 Email = c.Email,
                 FullAddress = c.Address != null ? c.Address.FullAddress : "",
+                addressname=c.Address!=null? c.Address.Name:"",
                 CityName = c.Address != null && c.Address.City != null ? c.Address.City.Name : "",
                 Username = c.Username,
                 Password = c.Password,
@@ -79,7 +80,7 @@ namespace ticketfinder.Controllers
             customer.Phone = model.Phone;
             customer.Password = model.Password;
             customer.Username = model.Username;
-            if (model.AddressId!=null)
+            if (model.AddressId!=null&&model.AddressId!=0)
             {
                 Address address = context.Addresses.FirstOrDefault(a => a.Id == model.AddressId);
                 if (address==null)
@@ -93,7 +94,7 @@ namespace ticketfinder.Controllers
             else
             {
                 City city = context.Cities.FirstOrDefault(c => c.Id == model.CityId);
-                if (city == null)
+                if (city == null )
                 {
                     return BadRequest("City is not found");
                 }
@@ -102,7 +103,7 @@ namespace ticketfinder.Controllers
                 Address address = new Address();
 
                 address.City = city;
-
+                address.Name=model.addressname;
                 address.FullAddress = model.FullAddress;
                 address.GeoLocation = "[" + model.Latitude + "," + model.Longitude + "]";
 

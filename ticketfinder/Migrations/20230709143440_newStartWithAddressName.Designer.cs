@@ -12,8 +12,8 @@ using ticketfinder.Context;
 namespace ticketfinder.Migrations
 {
     [DbContext(typeof(TicketFinderContext))]
-    [Migration("20230630080925_initAfterChange")]
-    partial class initAfterChange
+    [Migration("20230709143440_newStartWithAddressName")]
+    partial class newStartWithAddressName
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,6 +40,10 @@ namespace ticketfinder.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GeoLocation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -146,6 +150,9 @@ namespace ticketfinder.Migrations
 
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeSpan?>("Duration")
                         .HasColumnType("time");

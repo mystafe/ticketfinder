@@ -10,6 +10,7 @@ namespace ticketfinder.Models.DTO.EventDTO
         public double Price { get; set; }
         public DateTime? Date { get; set; }
         public TimeSpan? Duration { get; set; }
+        public string? Description { get; set; }
         public bool IsActive { get; set; } = true;
         public bool IsOnSale { get; set; } = true;
         public bool IsAvailable { get; set; } = true;
@@ -17,6 +18,7 @@ namespace ticketfinder.Models.DTO.EventDTO
         public EventType EventType { get; set; }
         public List<EventImage>? EventImages { get; set; }
         public List<EventStage>? EventStages { get; set; }
+        public List <EventSeat>? EventSeats { get; set; }
 
     }
 }

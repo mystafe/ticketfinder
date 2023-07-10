@@ -15,6 +15,7 @@ namespace ticketfinder.Models.DTO.CustomerDTO
         public int? AddressId { get; set; }
         public int? CityId { get; set; }
         public string? FullAddress { get; set; }
+        public string? addressname { get; set; } = "new address";
         public string? Latitude { get; set; } = "42.1";
         public string? Longitude { get; set; } = "28.1";
 

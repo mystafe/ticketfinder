@@ -72,6 +72,7 @@ namespace ticketfinder.Controllers
                 var city = context.Cities.Find(model.CityId);
                 if (city == null) return BadRequest("City is not defined");
                 var address2 = new Address();
+                address2.Name = model.Name;
                 address2.FullAddress = model.FullAddress;
                 address2.GeoLocation = "[" + model.Latitude + "," + model.Longitude + "+]";
                 address2.City = city;

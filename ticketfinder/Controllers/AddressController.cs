@@ -63,6 +63,7 @@ namespace ticketfinder.Controllers
                 return BadRequest("City is not found!");
             }
             Address address = new Address();
+            address.Name = model.Name;
             address.FullAddress = model.FullAddress;     
             address.City = city;
             address.GeoLocation ="["+model.Latitude +","+model.Longitude+"]" ;

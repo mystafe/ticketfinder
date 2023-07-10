@@ -57,8 +57,19 @@ namespace ticketfinder.Controllers
 
 
             //Check whether the customer participate that event or not. Also it needs to be after event time..
+          
+            var avgRat= @event.AvgRating;
+            var totRankList = context.Ratings.Include(r => r.Event)
+                .Where(r => r.Event.Id == @event.Id).ToList();
+            var totRank = totRankList.Count();
+            var totalRatingForEvent = avgRat * totRank;
+            totalRatingForEvent += rating.RatingValue;
+            var newAvg = totalRatingForEvent / (totRank + 1);
+            @event.AvgRating = newAvg;
             context.Ratings.Add(rating);
             context.SaveChanges();
+
+
 
             return Ok(rating);
         }

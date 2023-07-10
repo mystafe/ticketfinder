@@ -23,12 +23,11 @@ namespace ticketfinder.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionStringOld = "Server=.;Database=ticketfinder2;Trusted_Connection=True;";
-            string connectionStringNew = "Server=.;Database=ticketfinder2;User Id=sa;Password=Sifrem34.2810;";
-            string connectionStringNew6 = "Server=localhost,1433\\ticketfinder2=myDatabase;Database=ticketfinder6;User=sa;Password=Sifrem34.2810;Trusted_Connection=False";
+
+            string connectionString = "Server=localhost,1433\\ticketfinder=myDatabase;Database=ticketfinder;User=sa;Password=Sifrem34.2810;Trusted_Connection=False";
 
 
-            optionsBuilder.UseSqlServer(connectionStringNew6);
+            optionsBuilder.UseSqlServer(connectionString);
 
         }
 

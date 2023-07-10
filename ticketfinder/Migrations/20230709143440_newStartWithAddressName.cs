@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ticketfinder.Migrations
 {
-    public partial class initAfterChange : Migration
+    public partial class newStartWithAddressName : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,6 +32,7 @@ namespace ticketfinder.Migrations
                     Price = table.Column<double>(type: "float", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Duration = table.Column<TimeSpan>(type: "time", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     IsOnSale = table.Column<bool>(type: "bit", nullable: false),
                     IsAvailable = table.Column<bool>(type: "bit", nullable: false),
@@ -89,6 +90,7 @@ namespace ticketfinder.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FullAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GeoLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: true)
